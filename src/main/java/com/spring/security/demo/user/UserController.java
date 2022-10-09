@@ -7,6 +7,7 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +52,7 @@ public class UserController {
         return userService.updateUserRole(userName, role, currentUser);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("disable-account/{userName}")
     public ResponseEntity<ApiResponse> disableAccount(@PathVariable("userName") String userName){
         return userService.disableAccount(userName);
